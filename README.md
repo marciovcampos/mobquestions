@@ -75,7 +75,7 @@ retorna os dados da questão correpondente (pelo username) em formato JSON e o s
 
 6. POST /v1/questions/<question_id>/comment (incluir comentário em questão)
 retorna os dados da questão atualizada em formato json e o status code 200 em caso de sucesso.
-se a questão não for encontrada, status code 404. se o usuário não for encontrado, ou os dados enviados estiverem inválidos retornar status code 401.
+se a questão não for encontrada, status code 404. se o usuário não for encontrado, ou os dados enviados estiverem inválidos retornar status code 400.
 ```javascript
 {"username": "mark", "message": "essa questao e facil"}
 ```
@@ -83,4 +83,4 @@ se a questão não for encontrada, status code 404. se o usuário não for encon
 7. GET /v1/questions/search (buscar questões)
 esta rota receberá como parametro os critérios da busca pela url, como no exemplo abaixo:
 /v1/questions/search?disciplina=2&ano=2013
-retorna as questões encontradas baseadas nos critérios de busca e o status code 200 em caso de sucesso. retorna status code 401 caso os dados enviados estiverem inválidos.
+retorna as questões encontradas baseadas nos critérios de busca e o status code 200 em caso de sucesso. retorna status code 400 caso os dados enviados estiverem inválidos.
