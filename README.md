@@ -19,8 +19,9 @@ git clone https://github.com/<seu_nome_de_usuario>/mobquestions
 
 3. Instale as dependências. Execute no prompt de comando ou no shell: `python -m pip install -r requirements.txt`
 
-4. Defina a variável de ambiente *FLASK_APP*. Em Windows:
-`set FLASK_APP=app.py`
+4. Defina as variáveis de ambiente *FLASK_APP* e *FLASK_DEBUG*. Em Windows, prompt de comando, execute:
+`set FLASK_APP=app.py` e `set FLASK_DEBUG=1` 
+
 
 5. Para rodar o app flask execute: `python -m flask run --host=0.0.0.0 --port=8088`. Para testar, acesse pelo navegador o endereço http://localhost:8088/
 
@@ -34,7 +35,7 @@ git clone https://github.com/<seu_nome_de_usuario>/mobquestions
 
 Implemente as seguintes rotas.
 
-0. PUT /v1/users/ (novo usuário)
+0. POST /v1/users/ (novo usuário)
 cadastra um novo usuário, com os dados: username, password, email, name, phones.
 retorna status code 201 caso o usuário seja criado; caso o 
 *username* enviado já exista na base de dados, retornar status code 203.
@@ -48,14 +49,14 @@ retorna os dados do usuário correspondente (pelo username) em formato JSON e o 
 
 2. POST /v1/authenticate (autenticação de usuário)
 valida a combinação username e password enviadas.
-retorna status code 200 em caso de sucesso; e 403, caso a combinação seja inválida, e 401 caso não tenha sido enviados os dois valores: *username* e *password*.
+retorna status code 200 em caso de sucesso; e 403, caso a combinação seja inválida, e 400 caso não tenha sido enviados os dois valores: *username* e *password*.
 utilize-se a função check_password_hash para comparar o password enviado com o password na base de dados da seguinte forma (por exemplo): `check_password_hash(password_encontrado, password_enviado)`. Esta função retorna True se houver "correspondência".
 exemplo de dados de request: 
 ```javascript
 {"username": "mark", "password": "a123"}
 ```
 
-3. POST /v1/users/<username> (atualização de dados de usuário)
+3. PUT /v1/users/<username> (atualização de dados de usuário)
 atualiza os dados do usuário correspondente (pelo username). os campos possíveis de modificação são name; email e phones.
 ```javascript
 {"name": "Markin", "phones": ["3333-2222"]}
@@ -79,9 +80,7 @@ se a questão não for encontrada, status code 404. se o usuário não for encon
 {"username": "mark", "message": "essa questao e facil"}
 ```
 
-7. POST /v1/questions/search (buscar questões)
+7. GET /v1/questions/search (buscar questões)
+esta rota receberá como parametro os critérios da busca pela url, como no exemplo abaixo:
+/v1/questions/search?disciplina=2&ano=2013
 retorna as questões encontradas baseadas nos critérios de busca e o status code 200 em caso de sucesso. retorna status code 401 caso os dados enviados estiverem inválidos.
-exemplo de dados de request: 
-```javascript
-{"disciplina": [1, 3], "ano": 2013}
-```
