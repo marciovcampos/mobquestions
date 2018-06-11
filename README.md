@@ -91,5 +91,11 @@ retorna as questões encontradas baseadas nos critérios de busca e o status cod
 retorna se a resposta enviada foi correta ou não. Esta rota deve requerer o envio de um token válido.
 
 10. GET /v1/questions/answers (visualizar desempenho)
-retorna o desempenho (se acertou ou não) nas questões respondidas pelo usuário autenticado. Observe que para que isso seja possível, a implementação rota 9. deve armazenar a questão e o desempenho (se acertou ou não)
-Esta rota deve requerer o envio de um token válido.
+retorna as respostas enviadas (answer) nas questões respondidas pelo usuário autenticado. Observe que para que isso seja possível, a implementação rota 9. deve armazenar as respostas enviadas pelo usuário.
+Esta rota deve requerer o envio de um token válido. 
+O retorno deve ser no formato como do exemplo abaixo:
+```javascript
+[{"id": "q234541-4c", "answer": "E"},
+{"id": "w23as41-5b", "answer": "C"}
+]
+```
