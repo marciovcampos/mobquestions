@@ -84,3 +84,12 @@ se a questão não for encontrada, status code 404. se o usuário não for encon
 esta rota receberá como parametro os critérios da busca pela url, como no exemplo abaixo:
 /v1/questions/search?disciplina=2&ano=2013
 retorna as questões encontradas baseadas nos critérios de busca e o status code 200 em caso de sucesso. retorna status code 400 caso os dados enviados estiverem inválidos.
+
+8. Modifique as implementações das rotas 3. e 6. para que elas requeiram o envio de um token válido. Teste-os com Postman.
+
+9. POST /v1/questions/<question_id>/answer  (responder questao)
+retorna se a resposta enviada foi correta ou não. Esta rota deve requerer o envio de um token válido.
+
+10. GET /v1/questions/answers (visualizar desempenho)
+retorna o desempenho (se acertou ou não) nas questões respondidas pelo usuário autenticado. Observe que para que isso seja possível, a implementação rota 9. deve armazenar a questão e o desempenho (se acertou ou não)
+Esta rota deve requerer o envio de um token válido.
