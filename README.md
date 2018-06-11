@@ -111,10 +111,10 @@ Para realizar o deploy você deve:
 
 1. Criar uma conta em heroku.com
 2. Ao logar em heroku.com você entrará em https://dashboard.heroku.com/apps. Neste painel, acesso o menu no topo e à direita, e acesse no menu "New" a opção "Create new app"
-3. Escolha o nome <seu nome de usuario no github>-questions para o seu app e clique em Create app.
+3. Escolha o nome seu_nome_de_usuario_no_github-questions para o seu app e clique em Create app.
 4. Agora na seção Deployment method clique em Github e pesquise e escolha o seu repositório mobquestions.
 5. Na seção Automatic Deploys, clique em Enable Automatic Deploys. A partir de agora, sempre que você realizar um git push (atualizar o seu repositório), o heroku irá atualizar a aplicação.
 6. Na seção Manual deploy. clique em deploy branch. Isso mesmo, o primeiro deploy será manual.
   
-Para aferir o deploy, acesse https://<seu nome de usuario no github>-questions.herokuapp.com
+Para aferir o deploy, acesse https://seu_nome_de_usuario_no_github-questions.herokuapp.com
 
