@@ -16,6 +16,7 @@ def create_app():
 
     app_context = app.app_context()
     app_context.push()
+    return app
 
 app = create_app()
 mongo = PyMongo(app)
