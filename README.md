@@ -7,6 +7,7 @@ os usuários podem responder, pesquisar e comentar em questões.
 
 As atividades serão descritas nesta página, e serão progressivamente atualizadas **neste repositório**.
 
+Além das implementações, será necessário realizar o deploy no serviço de plataforma como serviço **heroku**.
 
 ## Pré-requisitos
 
@@ -28,6 +29,8 @@ git clone https://github.com/<seu_nome_de_usuario>/mobquestions
 6. Agora realize as modificações em *app.py* para implementar as atividades.
 
 7. Para testar as atividades, recomenda-se a utilização de *POSTMAN* (http://getpostman.com). A versão portável está disponível em https://portapps.github.io/app/postman-portable/. Após instalar, importe `mobquestions.postman_collection.json` para obter os requests das primeiras atividades.
+
+
 
 
 
@@ -90,7 +93,7 @@ retorna as questões encontradas baseadas nos critérios de busca e o status cod
 9. POST /v1/questions/<question_id>/answer  (responder questao)
 retorna se a resposta enviada foi correta ou não. Esta rota deve requerer o envio de um token válido.
 
-10. GET /v1/questions/answers (visualizar desempenho)
+10. GET /v1/questions/answers (visualizar respostas)
 retorna as respostas enviadas (answer) nas questões respondidas pelo usuário autenticado. Observe que para que isso seja possível, a implementação rota 9. deve armazenar as respostas enviadas pelo usuário.
 Esta rota deve requerer o envio de um token válido. 
 O retorno deve ser no formato como do exemplo abaixo:
@@ -99,3 +102,19 @@ O retorno deve ser no formato como do exemplo abaixo:
 {"id": "w23as41-5b", "answer": "C"}
 ]
 ```
+
+## Deploy em Heroku
+
+Heroku é um serviço de plataforma como serviço em nuvens.
+
+Para realizar o deploy você deve:
+
+1. Criar uma conta em heroku.com
+2. Ao logar em heroku.com você entrará em https://dashboard.heroku.com/apps. Neste painel, acesso o menu no topo e à direita, e acesse no menu "New" a opção "Create new app"
+3. Escolha o nome <seu nome de usuario no github>-questions para o seu app e clique em Create app.
+4. Agora na seção Deployment method clique em Github e pesquise e escolha o seu repositório mobquestions.
+5. Na seção Automatic Deploys, clique em Enable Automatic Deploys. A partir de agora, sempre que você realizar um git push (atualizar o seu repositório), o heroku irá atualizar a aplicação.
+6. Na seção Manual deploy. clique em deploy branch. Isso mesmo, o primeiro deploy será manual.
+  
+Para aferir o deploy, acesse https://<seu nome de usuario no github>-questions.herokuapp.com
+
