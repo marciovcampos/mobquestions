@@ -16,7 +16,6 @@ app.config['DEBUG'] = True
 app_context = app.app_context()
 app_context.push()
 
-app = create_app()
 mongo = PyMongo(app)
 
 col_users = mongo.db.users
