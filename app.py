@@ -1,6 +1,5 @@
 from flask import Flask, request, jsonify, redirect, g
 from flask_pymongo import PyMongo
-from flask_jwt import JWT
 
 from werkzeug.security import generate_password_hash, check_password_hash
 
