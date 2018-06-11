@@ -2,3 +2,4 @@ Flask
 pymongo
 Flask-PyMongo
 pyjwt
+gunicorn
