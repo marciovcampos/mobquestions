@@ -37,7 +37,7 @@ def signin():
     if user:
         token_payload = {'username': user['username']}
         access_token = create_access_token(token_payload)
-        refresh_token = create_refresh_token(access_token)
+        refresh_token = create_refresh_token(token_payload)
         col_tokens.insert_one({'value': refresh_token})
         return jsonify({'access_token': access_token, 
                         'refresh_token': refresh_token})
@@ -53,11 +53,11 @@ def index():
 
 
 @app.route('/refresh_token', methods=['GET'])
-@jwt_required
+@jwt_refresh_required
 def refresh_token():    
     token = col_tokens.find_one({'value': g.token})
     if token:
-        col_tokens.remove_one({'value': g.token})
+        col_tokens.delete_one({'value': g.token})
         token_payload = {'username': g.parsed_token['username']}
         access_token = create_access_token(token_payload)
         refresh_token = create_refresh_token(token_payload)
