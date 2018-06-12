@@ -20,6 +20,8 @@ mongo = PyMongo(app)
 
 col_users = mongo.db.users
 col_questions = mongo.db.questions
+col_tokens = mongo.db.tokens        # refresh tokens
+
 
 def authenticate(username, password):
     user = col_users.find_one({'username': username})
@@ -34,7 +36,11 @@ def signin():
     user = authenticate(data['username'], data['password'])
     if user:
         token_payload = {'username': user['username']}
-        return create_token(token_payload)
+        access_token = create_access_token(token_payload)
+        refresh_token = create_refresh_token(access_token)
+        col_tokens.insert_one({'value': refresh_token})
+        return jsonify({'access_token': access_token, 
+                        'refresh_token': refresh_token})
     else:
         return "Unauthorized", 401
 
@@ -44,6 +50,22 @@ def signin():
 def index():
     res = col_users.find({})
     return json_util.dumps(list(res)), 200
+
+
+@app.route('/refresh_token', methods=['GET'])
+@jwt_required
+def refresh_token():    
+    token = col_tokens.find_one({'value': g.token})
+    if token:
+        col_tokens.remove_one({'value': g.token})
+        token_payload = {'username': g.parsed_token['username']}
+        access_token = create_access_token(token_payload)
+        refresh_token = create_refresh_token(token_payload)
+        col_tokens.insert_one({'value': refresh_token})
+        return json_util.dumps({'access_token': access_token, 
+                                'refresh_token': refresh_token}), 200
+    else:
+        return "Unauthorized", 401
 
 
 # rota para visualizar o conteudo do payload encriptado no token.

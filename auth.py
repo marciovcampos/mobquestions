@@ -20,7 +20,8 @@ def jwt_required(f):
 			return jsonify(message='Missing authorization header'), 401
 		try:
 			payload = parse_token(request)
-			g.parsed_token = payload['sub']
+			g.token = req.headers.get('Authorization').split()[1]
+			g.parsed_token = payload
 		except DecodeError:
 			return jsonify(message='Token is invalid'), 401
 		except ExpiredSignature:
@@ -28,10 +29,10 @@ def jwt_required(f):
 		return f(*args, **kwargs)
 	return decorated_function
 
-def create_token(user):
+
+def create_access_token(user):
 	payload = {
-		# subject
-		'sub': user['username'],
+		'username': user['username'],
 		# issued at
 		'iat': datetime.utcnow(),
 		# expiry
@@ -39,6 +40,17 @@ def create_token(user):
 	}
 	token = jwt.encode(payload, SECRET_KEY, algorithm=jwt_algorithm)
 	return token.decode('unicode_escape')
+
+
+def create_refresh_token(user):
+	payload = {
+		'username': user['username'],
+		# issued at
+		'iat': datetime.utcnow(),
+	}
+	token = jwt.encode(payload, SECRET_KEY, algorithm=jwt_algorithm)
+	return token.decode('unicode_escape')
+	
 
 def parse_token(req):
 	token = req.headers.get('Authorization').split()[1]
