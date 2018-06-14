@@ -50,7 +50,7 @@ exemplo de dados de request:
 1. GET /v1/users/<username>  (obtenção de usuário)
 retorna os dados do usuário correspondente (pelo username) em formato JSON e o status code 200; ou status code 404 caso o usuário não exista.
 
-2. POST /v1/authenticate (autenticação de usuário)
+2. POST `/v1/authenticate` (autenticação de usuário)
 valida a combinação username e password enviadas.
 retorna status code 200 em caso de sucesso; e 403, caso a combinação seja inválida, e 400 caso não tenha sido enviados os dois valores: *username* e *password*.
 utilize-se a função check_password_hash para comparar o password enviado com o password na base de dados da seguinte forma (por exemplo): `check_password_hash(password_encontrado, password_enviado)`. Esta função retorna True se houver "correspondência".
@@ -59,38 +59,38 @@ exemplo de dados de request:
 {"username": "mark", "password": "a123"}
 ```
 
-3. PUT /v1/users/<username> (atualização de dados de usuário)
+3. PUT `/v1/users/<username>` (atualização de dados de usuário)
 atualiza os dados do usuário correspondente (pelo username). os campos possíveis de modificação são name; email e phones.
 ```javascript
 {"name": "Markin", "phones": ["3333-2222"]}
 ```
 
-4. PATCH /v1/users/<username> (redefinição de senha)
+4. PATCH `/v1/users/<username>` (redefinição de senha)
 modifica o password do usuário correspondente (pelo username). 
 exemplo de dados de request: 
 ```javascript
 {"password": "value"}
 ```
 
-5. GET /v1/questions/<question_id> (obtenção de questão)
+5. GET `/v1/questions/<question_id>` (obtenção de questão)
 retorna os dados da questão correpondente (pelo username) em formato JSON e o status code 200; ou status code 404 caso a questão não exista.
 
 
-6. POST /v1/questions/<question_id>/comment (incluir comentário em questão)
+6. POST `/v1/questions/<question_id>/comment` (incluir comentário em questão)
 retorna os dados da questão atualizada em formato json e o status code 200 em caso de sucesso.
 se a questão não for encontrada, status code 404. se o usuário não for encontrado, ou os dados enviados estiverem inválidos retornar status code 400.
 ```javascript
 {"username": "mark", "message": "essa questao e facil"}
 ```
 
-7. GET /v1/questions/search (buscar questões)
+7. GET `/v1/questions/search` (buscar questões)
 esta rota receberá como parametro os critérios da busca pela url, como no exemplo abaixo:
 /v1/questions/search?disciplina=2&ano=2013
 retorna as questões encontradas baseadas nos critérios de busca e o status code 200 em caso de sucesso. retorna status code 400 caso os dados enviados estiverem inválidos.
 
 8. Modifique as implementações das rotas 3. e 6. para que elas requeiram o envio de um token válido. Teste-os com Postman.
 
-9. POST /v1/questions/<question_id>/answer  (responder questao)
+9. POST `/v1/questions/<question_id>/answer`  (responder questao)
 retorna se a resposta enviada foi correta ou não. Esta rota deve requerer o envio de um token válido.
 
 10. GET /v1/questions/answers (visualizar respostas)
