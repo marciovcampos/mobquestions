@@ -38,7 +38,7 @@ git clone https://github.com/<seu_nome_de_usuario>/mobquestions
 
 Implemente as seguintes rotas.
 
-0. POST /v1/users/ (novo usuário)
+0. POST `/v1/users/` (novo usuário)
 cadastra um novo usuário, com os dados: username, password, email, name, phones.
 retorna status code 201 caso o usuário seja criado; caso o 
 *username* enviado já exista na base de dados, retornar status code 203.
@@ -47,7 +47,7 @@ exemplo de dados de request:
 {"username": "mark", "password": "a123", "email": "mark@knopfler.com", "name": "Mark", "phones": ["3333-2222", "2222-3333"]}
 ```
 
-1. GET /v1/users/<username>  (obtenção de usuário)
+1. GET `/v1/users/<username>`  (obtenção de usuário)
 retorna os dados do usuário correspondente (pelo username) em formato JSON e o status code 200; ou status code 404 caso o usuário não exista.
 
 2. POST `/v1/authenticate` (autenticação de usuário)
@@ -93,7 +93,7 @@ retorna as questões encontradas baseadas nos critérios de busca e o status cod
 9. POST `/v1/questions/<question_id>/answer`  (responder questao)
 retorna se a resposta enviada foi correta ou não. Esta rota deve requerer o envio de um token válido.
 
-10. GET /v1/questions/answers (visualizar respostas)
+10. GET `/v1/questions/answers` (visualizar respostas)
 retorna as respostas enviadas (answer) nas questões respondidas pelo usuário autenticado. Observe que para que isso seja possível, a implementação rota 9. deve armazenar as respostas enviadas pelo usuário.
 Esta rota deve requerer o envio de um token válido. 
 O retorno deve ser no formato como do exemplo abaixo:
