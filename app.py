@@ -57,15 +57,14 @@ def index():
     res = col_users.find({})
     return json_util.dumps(list(res)), 200
 
-
 @app.route('/cached_example', methods=['GET'])
 def questao_mais_legal_cacheada():    
-    if rcache and rcache['questao_legal']:
-        return rcache['questao_legal'], 200
+    if rcache and rcache.get('questao_legal'):
+        return rcache.get('questao_legal'), 200
     else:
         question = col_questions.find({'id': 'bc3b3701-b7'})
         if rcache:
-            rcache['questao_legal'] = json_util.dumps(question)
+            rcache.set('questao_legal', json_util.dumps(question))
     return json_util.dumps(question), 200
 
 @app.route('/not_cached_example', methods=['GET'])
