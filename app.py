@@ -8,6 +8,13 @@ from bson import json_util
 from config import MONGO_URI
 from auth import *
 
+import os
+import redis
+
+if os.getenv('REDIS_URL'):
+    rcache = redis.from_url(os.getenv('REDIS_URL'))
+else:
+    rcache = None
 
 app = Flask(__name__)
 app.config['MONGO_URI'] = MONGO_URI
@@ -44,12 +51,26 @@ def signin():
     else:
         return "Unauthorized", 401
 
-
 @app.route('/', methods=['GET'])
 @jwt_required
 def index():
     res = col_users.find({})
     return json_util.dumps(list(res)), 200
+
+
+@app.route('/cached_example', methods=['GET'])
+def questao_mais_legal_cacheada():    
+    if rcache['questao_legal']:
+        return rcache['questao_legal'], 200
+    else:
+        question = col_questions.find({'id': 'bc3b3701-b7'})
+        rcache['questao_legal'] = json_util.dumps(question)
+    return json_util.dumps(question), 200
+
+@app.route('/not_cached_example', methods=['GET'])
+def questao_mais_legal():    
+    question = col_questions.find({'id': 'bc3b3701-b7'})
+    return json_util.dumps(question), 200
 
 
 @app.route('/refresh_token', methods=['GET'])
