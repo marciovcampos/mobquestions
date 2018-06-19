@@ -60,11 +60,12 @@ def index():
 
 @app.route('/cached_example', methods=['GET'])
 def questao_mais_legal_cacheada():    
-    if rcache['questao_legal']:
+    if rcache and rcache['questao_legal']:
         return rcache['questao_legal'], 200
     else:
         question = col_questions.find({'id': 'bc3b3701-b7'})
-        rcache['questao_legal'] = json_util.dumps(question)
+        if rcache:
+            rcache['questao_legal'] = json_util.dumps(question)
     return json_util.dumps(question), 200
 
 @app.route('/not_cached_example', methods=['GET'])
