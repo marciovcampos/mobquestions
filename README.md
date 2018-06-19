@@ -94,7 +94,7 @@ retorna as questões encontradas baseadas nos critérios de busca e o status cod
 retorna se a resposta enviada foi correta ou não. Esta rota deve requerer o envio de um token válido.
 
 10. GET `/v1/questions/answers` (visualizar respostas)
-retorna as respostas enviadas (answer) nas questões respondidas pelo usuário autenticado. Observe que para que isso seja possível, a implementação rota 9. deve armazenar as respostas enviadas pelo usuário.
+retorna as respostas enviadas (answer) nas questões respondidas pelo **usuário autenticado**. Observe que para que isso seja possível, a implementação rota 9. deve armazenar as respostas enviadas pelo usuário na coleção de usuários.
 Esta rota deve requerer o envio de um token válido. 
 O retorno deve ser no formato como do exemplo abaixo:
 ```javascript
@@ -102,6 +102,12 @@ O retorno deve ser no formato como do exemplo abaixo:
 {"id": "w23as41-5b", "answer": "C"}
 ]
 ```
+
+11. POST `/v1/featured_questions` (atualizar perguntas destaque)
+atualiza o cache com as perguntas mais respondidas. antes de implementar esta rota, modifique a implementação da rota 9. de modo que inclua um contador de número de respostas na questão sendo respondida. 
+
+12. GET `/v1/featured_questions` (perguntas destaque)
+retorna as perguntas mais respondidas. Deve utilizar o cache para obter o resultado.
 
 ## Deploy em Heroku
 
@@ -115,6 +121,7 @@ Para realizar o deploy você deve:
 4. Agora na seção Deployment method clique em Github e pesquise e escolha o seu repositório mobquestions.
 5. Na seção Automatic Deploys, clique em Enable Automatic Deploys. A partir de agora, sempre que você realizar um git push (atualizar o seu repositório), o heroku irá atualizar a aplicação.
 6. Na seção Manual deploy. clique em deploy branch. Isso mesmo, o primeiro deploy será manual.
+7. Vamos agora adicionar um add-on de cache: *heroku redis*. Clique na aba overview, depois em *Configure Add-ons*. Pesquise e incluida *heroku redis*.
   
-Para aferir o deploy, acesse https://seu_nome_de_usuario_no_github-questions.herokuapp.com
+Para aferir o *deploy*, acesse https://seu_nome_de_usuario_no_github-questions.herokuapp.com
 
