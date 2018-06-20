@@ -96,12 +96,22 @@ def token():
     return json_util.dumps(g.parsed_token), 200
 
 
-@app.route('/users', methods=['POST'])
+#ATIVIDADES
+
+#Exercicio 00
+@app.route('/v1/users', methods=['POST'])
 def create_user():
     data = request.get_json()
-    data['password'] = generate_password_hash(data['password'])
-    col_users.insert_one(data)
-    return 'usuario ' + data['username'] + ' criado.', 201
+
+    res = col_users.find({'username':data['username']})
+
+    if(len(list(res)) > 0):
+        return 'Usuário ' +data['username']+' já existe!', 203
+    else:
+        data['password'] = generate_password_hash(data['password'])
+        col_users.insert_one(data)
+        return 'Usuário ' + data['username'] + ' criado com sucesso!', 201
+    
 
 @app.route('/users/<username>', methods=['GET'])
 def get_user(username):
