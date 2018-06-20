@@ -112,10 +112,17 @@ def create_user():
         col_users.insert_one(data)
         return 'Usuário ' + data['username'] + ' criado com sucesso!', 201
     
-
-@app.route('/users/<username>', methods=['GET'])
+#Exercicio 01
+@app.route('/v1/users/<username>', methods=['GET'])
 def get_user(username):
-    return username, 200
+    res = col_users.find({'username':username})
+
+    if(len(list(res)) > 0):
+        res = col_users.find({'username':username})
+        return json_util.dumps(res), 200        
+    else:
+        return 'O usuário ' +username+' não existe!', 404       
+    
 
 # rota para exemplificar como utilizar obter variaveis
 # de url. teste acessando 
