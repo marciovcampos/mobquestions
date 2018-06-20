@@ -95,8 +95,17 @@ def refresh_token():
 def token():    
     return json_util.dumps(g.parsed_token), 200
 
+# rota para exemplificar como utilizar obter variaveis
+# de url. teste acessando 
+# http://localhost:8088/questions/search?disciplina=1 
+@app.route('/questions/search', methods=['GET'])
+def search():
+    disciplina = request.args.get('disciplina')
+    return disciplina, 200
+
 
 #ATIVIDADES
+
 
 #Exercicio 00
 @app.route('/v1/users', methods=['POST'])
@@ -121,13 +130,20 @@ def get_user(username):
         res = col_users.find({'username':username})
         return json_util.dumps(res), 200        
     else:
-        return 'O usuário ' +username+' não existe!', 404       
-    
+        return 'O usuário ' +username+' não existe!', 404  
 
-# rota para exemplificar como utilizar obter variaveis
-# de url. teste acessando 
-# http://localhost:8088/questions/search?disciplina=1 
-@app.route('/questions/search', methods=['GET'])
-def search():
-    disciplina = request.args.get('disciplina')
-    return disciplina, 200
+#Exercício 02
+@app.route('/v1/user/authenticate', methods=['POST'])
+def authenticate_user():
+    data = request.get_json()
+    
+    if (data['username'] and data['password']):
+        user = col_users.find_one({'username':data['username']})
+
+        if (user and check_password_hash(user['password'], data['password'])):
+            return 'Usuário Autenticado!', 200
+        else:
+            return 'Usuário e/ou senha incorretos!', 403
+    else:
+        return 'Informe usuário e senha.', 401
+
